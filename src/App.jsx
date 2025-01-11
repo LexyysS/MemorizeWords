@@ -1,9 +1,6 @@
-import {
-  PlusCircleIcon,
-  PlayIcon,
-} from "@heroicons/react/24/solid";
+import { PlusCircleIcon, PlayIcon } from "@heroicons/react/24/solid";
 import { useEffect, useState } from "react";
-import {useStore} from "./store"
+import { useStore } from "./store";
 import FormCard from "./components/FormCard";
 import Card from "./components/Card";
 import PlayMemory from "./components/PlayMemory";
@@ -13,9 +10,21 @@ import { OrbitProgress } from "react-loading-indicators";
 import DetailCard from "./components/DetailCard";
 
 function App() {
-  const {words, showcard,showMoreDetails, warning, playMemory, showFormCard, setWarning, addClickWord, setShowFormCard , showDetailCard , setPlayMemory} = useStore();
+  const {
+    words,
+    showcard,
+    showMoreDetails,
+    warning,
+    playMemory,
+    showFormCard,
+    setWarning,
+    addClickWord,
+    setShowFormCard,
+    showDetailCard,
+    setPlayMemory,
+  } = useStore();
 
-  const [mounted, setMounted] = useState(false)
+  const [mounted, setMounted] = useState(false);
 
   const [searchWord, setSearchWord] = useState("");
   const [searchIA, setSearchIA] = useState("");
@@ -23,16 +32,13 @@ function App() {
   const [response, setResponse] = useState(null);
   const [loading, setLoading] = useState(false);
 
- 
   const [showButton, setShowButton] = useState(false);
 
-  
   useEffect(() => {
-    if(showcard) {
+    if (showcard) {
       setMounted(true);
     }
   }, [showcard]);
-  
 
   useEffect(() => {
     localStorage.setItem("words", JSON.stringify(words));
@@ -41,32 +47,12 @@ function App() {
   useEffect(() => {
     if (warning.boolean) {
       setTimeout(() => {
-        setWarning("",false);
+        setWarning("", false);
       }, 2000);
     }
   }, [warning]);
 
-
-  const warningOptions = () => {
-    {warning.type === "addWrong" && warning.boolean && (
-      <Warning>La palabra ya existe</Warning>
-    )}
-    {warning.type == "play" && warning.boolean && (
-      <Warning>No hay palabras guardadas</Warning>
-    )}
-    {warning.type == "addSuccess" && warning.boolean && (
-      <Warning>Palabra añadida correctamente</Warning>
-    )}
-    {warning.type == "delete" && warning.boolean && (
-      <Warning>Palabra eliminada correctamente</Warning>
-    )}
-    {warning.type == "successPlay" && warning.boolean && (
-      <Warning>Has completado el juego de memoria</Warning>
-    )}
-    {warning.type == "search" && warning.boolean && (
-      <Warning>Introduce una palabra valida</Warning>
-    )}
-  }
+ 
 
   const handleChange = (e) => {
     e.preventDefault();
@@ -80,7 +66,7 @@ function App() {
   const handleSubmitIA = async (e) => {
     e.preventDefault();
     if (searchIA === "") {
-      setWarning("search",true);
+      setWarning("search", true);
       return;
     }
     setLoading(true);
@@ -91,7 +77,7 @@ function App() {
 
       setLoading(false);
       setResponse(jsonResponse);
-      console.log(jsonResponse);
+      setSearchIA("");
     } catch (error) {
       console.log(error);
     }
@@ -104,10 +90,10 @@ function App() {
 
     const existingWord = words.find((item) => item.word === word);
     if (existingWord) {
-      setWarning("addWrong",true);
+      setWarning("addWrong", true);
       return;
     }
-    addClickWord(newWord)
+    addClickWord(newWord);
     setWarning("addSuccess", true);
   };
 
@@ -115,24 +101,35 @@ function App() {
     if (words.length > 0) {
       setPlayMemory();
     } else {
-      setWarning("play",true);
+      setWarning("play", true);
     }
   };
 
   return (
     <>
-      {playMemory && (
-        <PlayMemory />
+      {playMemory && <PlayMemory />}
+      {showMoreDetails !== "" && <DetailCard />}
+
+      {warning.type === "addWrong" && warning.boolean && (
+        <Warning>La palabra ya existe</Warning>
       )}
-      {showMoreDetails !== "" && (
-        <DetailCard />
+      {warning.type == "play" && warning.boolean && (
+        <Warning>No hay palabras guardadas</Warning>
+      )}
+      {warning.type == "addSuccess" && warning.boolean && (
+        <Warning>Palabra añadida correctamente</Warning>
+      )}
+      {warning.type == "delete" && warning.boolean && (
+        <Warning>Palabra eliminada correctamente</Warning>
+      )}
+      {warning.type == "successPlay" && warning.boolean && (
+        <Warning>Has completado el juego de memoria</Warning>
+      )}
+      {warning.type == "search" && warning.boolean && (
+        <Warning>Introduce una palabra valida</Warning>
       )}
 
-     {warningOptions()}
-
-      {showFormCard && (
-        <FormCard/>
-      )}
+      {showFormCard && <FormCard />}
 
       <div className="flex justify-center px-4 py-4 md:px-8 md:p-0 flex-col md:flex-row items-center w-full h-full gap-4">
         <div className="md:flex-[1] w-full h-96 md:h-[90vh] bg-slate-100 rounded-xl flex p-6 flex-col justify-center items-center">
@@ -201,7 +198,11 @@ function App() {
             </div>
           </div>
 
-          <div className={`flex flex-col w-full h-3/5 ${response ? "bg-white" :"bg-transparent"} ${response ? "rounded-xl" :"rounded-none"}`}>
+          <div
+            className={`flex flex-col w-full h-3/5 ${
+              response ? "bg-white" : "bg-transparent"
+            } ${response ? "rounded-xl" : "rounded-none"}`}
+          >
             <div className="relative w-full md:flex-[1] h-16">
               {/* Botón */}
               <button
@@ -239,8 +240,7 @@ function App() {
                   Buscar
                 </button>
               </form>
-              </div>
-            
+            </div>
 
             <div
               className={`flex-[4.8] relative flex flex-col ${
@@ -271,12 +271,10 @@ function App() {
                     <div className="bg-orange-500 w-32 p-0.5 text-white rounded-full ">
                       <p className="text-lg text-center">Traducción:</p>
                     </div>
-                    
+
                     <p className=" text-lg font-bold ml-2 text-blue-900">
                       {response.translate}
                     </p>
-                    
-                    
 
                     <h2 className="font-bold ml-1 text-lg">Ejemplos:</h2>
                     <div className="mx-6">
