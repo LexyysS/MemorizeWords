@@ -63,7 +63,7 @@ const PlayMemory = () => {
                 onClick={handleClick}
                 className="bg-blue-600 w-1/2 cursor-pointer hover:bg-blue-700 text-white font-bold p-3 rounded-full text-center"
               >
-                Lo se
+                Lo sé
               </button>
             ) : (
               <button
@@ -79,7 +79,7 @@ const PlayMemory = () => {
                 onClick={() => setKnown(true)}
                 className="bg-red-600 w-1/2 cursor-pointer hover:bg-red-700 text-white font-bold p-3 rounded-full text-center"
               >
-                No lo se
+                No lo sé
               </buttton>
             )}
           </div>

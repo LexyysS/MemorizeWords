@@ -1,4 +1,4 @@
-import { PlusCircleIcon, PlayIcon } from "@heroicons/react/24/solid";
+import { PlusCircleIcon, PlayIcon, MagnifyingGlassIcon } from "@heroicons/react/24/solid";
 import { useEffect, useState } from "react";
 import { useStore } from "./store";
 import FormCard from "./components/FormCard";
@@ -204,19 +204,23 @@ function App() {
             } ${response ? "rounded-xl" : "rounded-none"}`}
           >
             <div className="relative w-full md:flex-[1] h-16">
-              {/* Botón */}
-              <button
+              <div className="absolute z-20 w-full h-full flex gap-2">
+                <div className="md:w-1/2 w-0 h-full"></div>
+                <button
                 onClick={() => setShowButton(true)}
-                className={`absolute z-30 w-full md:w-1/2 right-0 bg-blue-700 hover:bg-blue-800 text-white p-4 rounded-xl transition-all duration-500 ease-in-out ${
+                className={` w-full md:w-1/2 h-full bg-blue-700 hover:bg-blue-800 text-white p-4 rounded-xl transition-all duration-500 ease-in-out ${
                   showButton ? "opacity-0 pointer-events-none" : "opacity-100"
                 }`}
               >
                 Buscar palabras por IA
               </button>
 
-              {/* Formulario */}
+              </div>
+              
+
+              
               <form
-                className={`absolute z-20 w-full right-0 flex gap-2 items-center bg-white p-2 rounded-xl transition-all duration-500 ease-in-out ${
+                className={`absolute z-20 w-full h-full right-0 flex gap-2 items-center bg-white p-2 rounded-xl transition-all duration-500 ease-in-out ${
                   showButton
                     ? "translate-x-0 opacity-100"
                     : "translate-x-full opacity-0"
@@ -234,10 +238,10 @@ function App() {
                   onChange={(e) => setSearchIA(e.target.value)}
                 />
                 <button
-                  className="bg-blue-600 hover:bg-blue-700 text-white font-bold p-3 rounded-lg"
+                  className="bg-blue-600 hover:bg-blue-700  text-white font-bold p-3 rounded-lg"
                   type="submit"
                 >
-                  Buscar
+                  <MagnifyingGlassIcon height={25} width={25} />
                 </button>
               </form>
             </div>
