@@ -1,4 +1,8 @@
-import { PlusCircleIcon, PlayIcon, MagnifyingGlassIcon } from "@heroicons/react/24/solid";
+import {
+  PlusCircleIcon,
+  PlayIcon,
+  MagnifyingGlassIcon,
+} from "@heroicons/react/24/solid";
 import { useEffect, useState } from "react";
 import { useStore } from "./store";
 import FormCard from "./components/FormCard";
@@ -52,11 +56,11 @@ function App() {
     }
   }, [warning]);
 
- 
-
-  const handleChange = (e) => {
+  const handleSearchSubmit = (e) => {
     e.preventDefault();
-    setSearchWord(e.target.value);
+    if (searchWord === "") {
+      setWarning("search", true);
+    }
   };
 
   const filtered = words.filter((item) =>
@@ -137,12 +141,13 @@ function App() {
             {" "}
             Palabras guardadas
           </h1>
-          <form onChange={handleChange} className="w-full mb-5">
+          <form onSubmit={handleSearchSubmit} className="w-full mb-5">
             <input
               className="p-2 w-full bg-white rounded-lg border border-blue-700"
               id="name"
               name="name"
               placeholder="Buscar palabra"
+              onChange={(e) => setSearchWord(e.target.value)}
               value={searchWord}
             />
           </form>
@@ -207,18 +212,15 @@ function App() {
               <div className="absolute z-20 w-full h-full flex gap-2">
                 <div className="md:w-1/2 w-0 h-full"></div>
                 <button
-                onClick={() => setShowButton(true)}
-                className={` w-full md:w-1/2 h-full bg-blue-700 hover:bg-blue-800 text-white p-4 rounded-xl transition-all duration-500 ease-in-out ${
-                  showButton ? "opacity-0 pointer-events-none" : "opacity-100"
-                }`}
-              >
-                Buscar palabras por IA
-              </button>
-
+                  onClick={() => setShowButton(true)}
+                  className={` w-full md:w-1/2 h-full bg-blue-700 hover:bg-blue-800 text-white p-4 rounded-xl transition-all duration-500 ease-in-out ${
+                    showButton ? "opacity-0 pointer-events-none" : "opacity-100"
+                  }`}
+                >
+                  Buscar palabras por IA
+                </button>
               </div>
-              
 
-              
               <form
                 className={`absolute z-20 w-full h-full right-0 flex gap-2 items-center bg-white p-2 rounded-xl transition-all duration-500 ease-in-out ${
                   showButton

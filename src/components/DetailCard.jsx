@@ -4,17 +4,13 @@ import { useEffect, useState } from "react";
 import { OrbitProgress } from "react-loading-indicators";
 import { useStore } from "../store";
 
-
 const DetailCard = () => {
-  const {selectedWord , closeMoreDetails} = useStore()
+  const { selectedWord, closeMoreDetails } = useStore();
 
   const [response, setResponse] = useState(null);
   const [loading, setLoading] = useState(false);
 
-
-
   useEffect(() => {
-    console.log(selectedWord)
     const response = async () => {
       setLoading(true);
 
@@ -34,11 +30,15 @@ const DetailCard = () => {
   return (
     <>
       {loading && (
-        
-          <div className="p-5 absolute flex justify-center items-center z-50 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-screen h-screen ">
-            <OrbitProgress variant="track-disc" color="#000" size="large" text="Loading.." textColor="" />
-          </div>
-        
+        <div className="p-5 absolute flex justify-center items-center z-50 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-screen h-screen ">
+          <OrbitProgress
+            variant="track-disc"
+            color="#000"
+            size="large"
+            text="Loading.."
+            textColor=""
+          />
+        </div>
       )}
       {response && (
         <>
@@ -51,7 +51,9 @@ const DetailCard = () => {
               <XCircleIcon className="w-10 h-10 text-red-600 hover:text-red-700" />
             </button>
             <div className="flex flex-col gap-2 py-2 px-4 w-full h-full overflow-auto ">
-              <h1 className="font-bold text-xl">Traduccion</h1>
+              <div className="bg-orange-500 w-32 p-0.5 text-white rounded-full ">
+                <p className="text-lg text-center">Traducción:</p>
+              </div>
               <p className=" text-lg font-bold text-blue-900">
                 {response.translate}
               </p>

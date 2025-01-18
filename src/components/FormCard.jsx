@@ -4,9 +4,7 @@ import { useStore } from "../store";
 const FormCard = () => {
   const [error, setError] = useState(false);
 
-  const {words, addClickWord, setWarning, setShowFormCard} = useStore();
-
-
+  const { words, addClickWord, setWarning, setShowFormCard } = useStore();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -21,17 +19,12 @@ const FormCard = () => {
     const existingWord = words.find((item) => item.word === word);
     if (existingWord) {
       setWarning("addWrong", true);
-      //setErrorWarning({type: "addWrong", state: true});
       setShowFormCard();
       return;
-
     }
     addClickWord(newWord);
-    //setWords([...words, newWord]);
     setShowFormCard();
     setWarning("addSuccess", true);
-    //setErrorWarning({type: "addSuccess", state: true});
-    console.log(words);
   };
 
   return (
